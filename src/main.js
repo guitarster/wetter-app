@@ -1,26 +1,6 @@
+import { getCurrentWeather, getForecastWeather } from "./API.js";
+
 const currentWeatherEl = document.querySelector(".current-weather");
-
-async function getCurrentWeather() {
-  const url =
-    "http://api.weatherapi.com/v1/current.json?key=81d83f0595614a6e8dc93225252907&q=Dunningen&lang=de";
-
-  const response = await fetch(url);
-
-  const responseJSON = await response.json();
-
-  return responseJSON;
-}
-
-async function getForecastWeather() {
-  const url =
-    "http://api.weatherapi.com/v1//forecast.json?key=81d83f0595614a6e8dc93225252907&q=Dunningen&lang=de";
-
-  const response = await fetch(url);
-
-  const responseJSON = await response.json();
-
-  return responseJSON;
-}
 
 const currentWeather = await getCurrentWeather();
 const forecastWeather = await getForecastWeather();
