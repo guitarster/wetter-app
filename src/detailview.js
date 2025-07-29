@@ -1,15 +1,14 @@
-import { getCurrentWeather, getForecastWeather } from "./API.js";
+import { getForecastWeather } from "./API.js";
 import { roundNumber } from "./utils.js";
 
 const currentWeatherEl = document.querySelector(".current-weather");
 
 export async function loadWeather(location) {
-  const currentWeather = await getCurrentWeather(location);
   const forecastWeather = await getForecastWeather(location);
 
-  const locationName = currentWeather.location.name;
-  const temperature = currentWeather.current.temp_c;
-  const conditionText = currentWeather.current.condition.text;
+  const locationName = forecastWeather.location.name;
+  const temperature = forecastWeather.current.temp_c;
+  const conditionText = forecastWeather.current.condition.text;
   const maxTemperature = forecastWeather.forecast.forecastday[0].day.maxtemp_c;
   const minTemperature = forecastWeather.forecast.forecastday[0].day.mintemp_c;
 
