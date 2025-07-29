@@ -1,0 +1,19 @@
+@use "variables" as *;
+
+@mixin largeScreens {
+  @media screen and (min-width: 700px) {
+    @content;
+  }
+}
+
+@mixin app {
+  padding: 1rem;
+  width: 400px;
+  height: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: auto;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+}

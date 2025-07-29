@@ -1,0 +1,29 @@
+@use "variables" as *;
+
+.current-weather {
+  margin: 2rem auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-shadow: $text-shadow;
+
+  &__location {
+    font-size: 1.5rem;
+  }
+
+  &__temperature {
+    font-size: 4.5rem;
+    margin: 0.5rem auto;
+    font-weight: 200;
+  }
+
+  &__condition {
+    margin-bottom: 0.25rem;
+  }
+
+  &__max-and-min-temperature {
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+  }
+}

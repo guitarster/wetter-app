@@ -1,11 +1,5 @@
 $background: #394759;
 $text-color: #fff;
-
-@mixin app() {
-  padding: 2rem;
-  width: 400px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+$border-radius: 6px;
+$text-shadow: 1px 1px 5px #000;
+$box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);

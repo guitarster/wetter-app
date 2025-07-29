@@ -1,4 +1,7 @@
 @use "variables" as *;
+@use "mixins" as *;
+@use "detailview" as *;
+@use "loading" as *;
 
 * {
   margin: 0;
@@ -12,84 +15,19 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .app-default {
-  @include app();
+  @include app;
   background: linear-gradient(0deg, #404547, #252e3a 51%);
   justify-content: center;
 }
 
 .app {
-  @include app();
-  border: 1px solid white;
+  @include app;
 }
 
-.lds-ring,
-.lds-ring div {
-  box-sizing: border-box;
-}
-.lds-ring {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-}
-.lds-ring div {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  border: 8px solid currentColor;
-  border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: currentColor transparent transparent transparent;
-}
-.lds-ring div:nth-child(1) {
-  animation-delay: -0.45s;
-}
-.lds-ring div:nth-child(2) {
-  animation-delay: -0.3s;
-}
-.lds-ring div:nth-child(3) {
-  animation-delay: -0.15s;
-}
-@keyframes lds-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-.current-weather {
-  margin: 2rem auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-shadow: 1px 1px 5px #000;
-
-  &__location {
-    font-size: 1.5rem;
-  }
-
-  &__temperature {
-    font-size: 4.5rem;
-    margin: 0.5rem auto;
-    font-weight: 200;
-  }
-
-  &__condition {
-    margin-bottom: 0.25rem;
-  }
-
-  &__max-and-min-temperature {
-    display: flex;
-    flex-direction: row;
-    gap: 0.5rem;
-  }
+.loading__message {
+  margin-top: 1rem;
 }
