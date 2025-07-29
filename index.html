@@ -5,9 +5,20 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Wetter App</title>
+    <link rel="stylesheet" href="src/styles.scss" />
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div class="current-weather">
+        <div class="current-weather__location">Dunningen</div>
+        <div class="current-weather__temperature">20°</div>
+        <div class="current-weather__condition">leicht bewölkt</div>
+        <div class="current-weather__max-and-min-temperature">
+          <div class="curent-weather__max-temperature">H:19°</div>
+          <div class="curent-weather__min-temperature">T:8°</div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
