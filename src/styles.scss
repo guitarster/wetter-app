@@ -16,23 +16,13 @@ body {
 }
 
 .app-default {
+  @include app();
   background: linear-gradient(0deg, #404547, #252e3a 51%);
-  padding: 2rem;
-  width: 400px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
 }
 
 .app {
-  padding: 2rem;
-  width: 400px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  @include app();
   border: 1px solid white;
 }
 

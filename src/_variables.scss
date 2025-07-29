@@ -1,2 +1,11 @@
 $background: #394759;
 $text-color: #fff;
+
+@mixin app() {
+  padding: 2rem;
+  width: 400px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
