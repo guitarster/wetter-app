@@ -25,24 +25,22 @@ export async function loadWeather(location) {
 
   const currentTime = formatHourlyTime(forecastWeather.current.last_updated);
 
-  console.log(currentTime);
-
   let counterCurrentDay = 0;
 
   for (let element of forecastHours) {
+    counterCurrentDay++;
+
     const forecastHour = formatHourlyTime(element.time);
     const forecastTemperature = element.temp_c;
     const forecastIcon = element.condition.icon;
 
     if (forecastHour === currentTime) {
-      counterCurrentDay++;
       renderForecastHourlyForecasts(
         "Jetzt",
         forecastIcon,
         roundNumber(forecastTemperature)
       );
     } else if (forecastHour >= currentTime) {
-      counterCurrentDay++;
       renderForecastHourlyForecasts(
         forecastHour + " Uhr",
         forecastIcon,
@@ -55,6 +53,7 @@ export async function loadWeather(location) {
 
   for (let el of forecastHoursNextDay) {
     counterNextDay++;
+
     const forecastHour = formatHourlyTime(el.time);
     const forecastTemperature = el.temp_c;
     const forecastIcon = el.condition.icon;

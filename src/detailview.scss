@@ -2,7 +2,7 @@
 @use "mixins" as *;
 
 .current-weather {
-  margin: 2rem auto;
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,5 +50,17 @@
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
+  }
+}
+
+.forecast-day {
+  @include card;
+
+  &__forecast {
+    border-top: 1px solid $border;
+    padding-top: 1.5rem;
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
   }
 }
