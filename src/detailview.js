@@ -11,15 +11,36 @@ export async function loadWeather(location) {
   const forecastWeather = await getForecastWeather(location);
   const currentDay = forecastWeather.forecast.forecastday[0];
 
+  loadCurrentWeather(forecastWeather, currentDay);
+
+  loadForecastHourlyTitle(currentDay);
+
+  loadForecastHourlyForecasts(forecastWeather, currentDay);
+}
+
+function loadCurrentWeather(forecastWeather, currentDay) {
   const locationName = forecastWeather.location.name;
   const temperature = forecastWeather.current.temp_c;
   const conditionText = forecastWeather.current.condition.text;
   const maxTemperature = currentDay.day.maxtemp_c;
   const minTemperature = currentDay.day.mintemp_c;
 
+  renderCurrentWeather(
+    locationName,
+    roundNumber(temperature),
+    conditionText,
+    roundNumber(maxTemperature),
+    roundNumber(minTemperature)
+  );
+}
+
+function loadForecastHourlyTitle(currentDay) {
   const conditionForecastText = currentDay.day.condition.text;
   const maxWindForecast = currentDay.day.maxwind_kph;
+  renderForecastHourlyTitle(conditionForecastText, maxWindForecast);
+}
 
+function loadForecastHourlyForecasts(forecastWeather, currentDay) {
   const forecastHours = currentDay.hour;
   const forecastHoursNextDay = forecastWeather.forecast.forecastday[1].hour;
 
@@ -66,16 +87,6 @@ export async function loadWeather(location) {
       );
     }
   }
-
-  renderCurrentWeather(
-    locationName,
-    roundNumber(temperature),
-    conditionText,
-    roundNumber(maxTemperature),
-    roundNumber(minTemperature)
-  );
-
-  renderForecastHourlyTitle(conditionForecastText, maxWindForecast);
 }
 
 function renderCurrentWeather(
