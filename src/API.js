@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://api.weatherapi.com/v1";
+const API_BASE_URL = "https://api.weatherapi.com/v1";
 const API_KEY = "81d83f0595614a6e8dc93225252907";
 const API_DAYS = 3;
 
