@@ -1,5 +1,5 @@
 import { getForecastWeather } from "./API.js";
-import { roundNumber } from "./utils.js";
+import { roundNumber, formatHourlyTime } from "./utils.js";
 
 const currentWeatherEl = document.querySelector(".current-weather");
 const forecastHourlyTitleEl = document.querySelector(".forecast-hourly__title");
@@ -7,46 +7,44 @@ const forecastHourlyForecasts = document.querySelector(
   ".forecast-hourly__forecasts"
 );
 
-const hourRightNow = new Date().getHours();
-
 export async function loadWeather(location) {
   const forecastWeather = await getForecastWeather(location);
+  const currentDay = forecastWeather.forecast.forecastday[0];
 
   const locationName = forecastWeather.location.name;
   const temperature = forecastWeather.current.temp_c;
   const conditionText = forecastWeather.current.condition.text;
-  const maxTemperature = forecastWeather.forecast.forecastday[0].day.maxtemp_c;
-  const minTemperature = forecastWeather.forecast.forecastday[0].day.mintemp_c;
+  const maxTemperature = currentDay.day.maxtemp_c;
+  const minTemperature = currentDay.day.mintemp_c;
 
-  const conditionForecastText =
-    forecastWeather.forecast.forecastday[0].day.condition.text;
-  const maxWindForecast =
-    forecastWeather.forecast.forecastday[0].day.maxwind_kph;
+  const conditionForecastText = currentDay.day.condition.text;
+  const maxWindForecast = currentDay.day.maxwind_kph;
 
-  const forecastHours = forecastWeather.forecast.forecastday[0].hour;
+  const forecastHours = currentDay.hour;
   const forecastHoursNextDay = forecastWeather.forecast.forecastday[1].hour;
+
+  const currentTime = formatHourlyTime(forecastWeather.current.last_updated);
+
+  console.log(currentTime);
 
   let counterCurrentDay = 0;
 
   for (let element of forecastHours) {
-    const forecastHour = element.time_epoch;
-    const date = new Date(forecastHour * 1000);
-    const hours = date.getHours();
-
+    const forecastHour = formatHourlyTime(element.time);
     const forecastTemperature = element.temp_c;
     const forecastIcon = element.condition.icon;
 
-    if (hours === hourRightNow) {
+    if (forecastHour === currentTime) {
       counterCurrentDay++;
       renderForecastHourlyForecasts(
         "Jetzt",
         forecastIcon,
         roundNumber(forecastTemperature)
       );
-    } else if (hours >= hourRightNow) {
+    } else if (forecastHour >= currentTime) {
       counterCurrentDay++;
       renderForecastHourlyForecasts(
-        hours + " Uhr",
+        forecastHour + " Uhr",
         forecastIcon,
         roundNumber(forecastTemperature)
       );
@@ -57,16 +55,13 @@ export async function loadWeather(location) {
 
   for (let el of forecastHoursNextDay) {
     counterNextDay++;
-    const forecastHour = el.time_epoch;
-    const date = new Date(forecastHour * 1000);
-    const hours = date.getHours();
-
+    const forecastHour = formatHourlyTime(el.time);
     const forecastTemperature = el.temp_c;
     const forecastIcon = el.condition.icon;
 
     if (counterCurrentDay + counterNextDay <= 24) {
       renderForecastHourlyForecasts(
-        hours + " Uhr",
+        forecastHour + " Uhr",
         forecastIcon,
         roundNumber(forecastTemperature)
       );
