@@ -1,12 +1,6 @@
 import { getForecastWeather } from "./API.js";
 import { roundNumber, formatHourlyTime } from "./utils.js";
 
-const currentWeatherEl = document.querySelector(".current-weather");
-const forecastHourlyTitleEl = document.querySelector(".forecast-hourly__title");
-const forecastHourlyForecasts = document.querySelector(
-  ".forecast-hourly__forecasts"
-);
-
 export async function loadWeather(location) {
   const forecastWeather = await getForecastWeather(location);
   const currentDay = forecastWeather.forecast.forecastday[0];
@@ -16,6 +10,8 @@ export async function loadWeather(location) {
   loadForecastHourlyTitle(currentDay);
 
   loadForecastHourlyForecasts(forecastWeather, currentDay);
+
+  loadForecastDaysForecasts(forecastWeather);
 }
 
 function loadCurrentWeather(forecastWeather, currentDay) {
@@ -89,6 +85,41 @@ function loadForecastHourlyForecasts(forecastWeather, currentDay) {
   }
 }
 
+function loadForecastDaysForecasts(forecastWeather) {
+  const forecastday = forecastWeather.forecast.forecastday;
+
+  const imageToday = forecastday[0].day.condition.icon;
+  const imageTomorrow = forecastday[1].day.condition.icon;
+  const imageDayAfterTomorrow = forecastday[2].day.condition.icon;
+
+  const maxTempToday = forecastday[0].day.maxtemp_c;
+  const maxTempTomorrow = forecastday[1].day.maxtemp_c;
+  const maxTempDayAfterTomorrow = forecastday[2].day.maxtemp_c;
+
+  const minTempToday = forecastday[0].day.mintemp_c;
+  const minTempTomorrow = forecastday[1].day.mintemp_c;
+  const minTempDayAfterTomorrow = forecastday[2].day.mintemp_c;
+
+  const maxWindToday = forecastday[0].day.maxwind_kph;
+  const maxWindTomorrow = forecastday[1].day.maxwind_kph;
+  const maxWindDayAfterTomorrow = forecastday[2].day.maxwind_kph;
+
+  renderForecastDaysForecasts(
+    imageToday,
+    imageTomorrow,
+    imageDayAfterTomorrow,
+    maxTempToday,
+    maxTempTomorrow,
+    maxTempDayAfterTomorrow,
+    minTempToday,
+    minTempTomorrow,
+    minTempDayAfterTomorrow,
+    maxWindToday,
+    maxWindTomorrow,
+    maxWindDayAfterTomorrow
+  );
+}
+
 function renderCurrentWeather(
   locationName,
   temperature,
@@ -96,6 +127,8 @@ function renderCurrentWeather(
   maxTemperature,
   minTemperature
 ) {
+  const currentWeatherEl = document.querySelector(".current-weather");
+
   currentWeatherEl.innerHTML = `
         <div class="current-weather__location">${locationName}</div>
         <div class="current-weather__temperature">${temperature}°</div>
@@ -107,6 +140,9 @@ function renderCurrentWeather(
 }
 
 function renderForecastHourlyTitle(conditionForecastText, maxWindForecast) {
+  const forecastHourlyTitleEl = document.querySelector(
+    ".forecast-hourly__title"
+  );
   forecastHourlyTitleEl.innerHTML = `
   Heute ${conditionForecastText}. Wind bis zu ${maxWindForecast} km/h.`;
 }
@@ -116,11 +152,78 @@ function renderForecastHourlyForecasts(
   forecastIcon,
   forecastTemperature
 ) {
+  const forecastHourlyForecasts = document.querySelector(
+    ".forecast-hourly__forecasts"
+  );
   forecastHourlyForecasts.innerHTML += `
   <div class="forecast-hourly__forecast">
     <span>${forecastHour}</span>
     <img src="${forecastIcon}" alt="" />
     <span>${forecastTemperature}°</span>
   </div>
+  `;
+}
+
+function renderForecastDaysForecasts(
+  imageToday,
+  imageTomorrow,
+  imageDayAfterTomorrow,
+  maxTempToday,
+  maxTempTomorrow,
+  maxTempDayAfterTomorrow,
+  minTempToday,
+  minTempTomorrow,
+  minTempDayAfterTomorrow,
+  maxWindToday,
+  maxWindTomorrow,
+  maxWindDayAfterTomorrow
+) {
+  const forecastDaysForecastsEl = document.querySelector(".app-default");
+
+  const today = new Date().getDay();
+  const tomorrow = today + 1;
+  const dayAfterTomorrow = today + 2;
+  const dayNames = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
+
+  forecastDaysForecastsEl.innerHTML += `
+        <div class="forecast-day">
+        <div class="forecast-day__title">
+          Vorhersage für die nächsten 3 Tage:
+        </div>
+        <div class="forecast-day__forecasts"></div>
+          <div class="forecast-day__forecast">
+            <span class="forecast-day__day">Heute</span>
+            <img src=${imageToday} alt="" class="forecast-day__image" />
+            <span class="forecas-day__max-temp">H: ${roundNumber(
+              maxTempToday
+            )}°</span>
+            <span class="forecast-day__min-temp">T: ${roundNumber(
+              minTempToday
+            )}°</span>
+            <span class="forecast-day__wind">Wind: ${maxWindToday} km/h</span>
+          </div>
+          <div class="forecast-day__forecast">
+            <span class="forecast-day__day">${dayNames[tomorrow]}</span>
+            <img src=${imageTomorrow} alt="" class="forecast-day__image" />
+            <span class="forecas-day__max-temp">H: ${roundNumber(
+              maxTempTomorrow
+            )}°</span>
+            <span class="forecast-day__min-temp">T: ${roundNumber(
+              minTempTomorrow
+            )}°</span>
+            <span class="forecast-day__wind">Wind: ${maxWindTomorrow} km/h</span>
+          </div>
+          <div class="forecast-day__forecast">
+            <span class="forecast-day__day">${dayNames[dayAfterTomorrow]}</span>
+            <img src=${imageDayAfterTomorrow} alt="" class="forecast-day__image" />
+            <span class="forecas-day__max-temp">H: ${roundNumber(
+              maxTempDayAfterTomorrow
+            )}°</span>
+            <span class="forecast-day__min-temp">T: ${roundNumber(
+              minTempDayAfterTomorrow
+            )}°</span>
+            <span class="forecast-day__wind">Wind: ${maxWindDayAfterTomorrow} km/h</span>
+          </div>
+        </div>
   `;
 }

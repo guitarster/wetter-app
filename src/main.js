@@ -10,13 +10,15 @@ renderLoadScreen(location);
 display();
 
 async function display() {
+  await loadWeather(location);
+
+  const appEl = document.querySelector(".app-default");
   const spinnerEl = document.querySelector(".lds-ring");
   const loadingMessage = document.querySelector(".loading__message");
 
-  await loadWeather(location);
-
   spinnerEl.innerHTML = "";
   loadingMessage.innerHTML = "";
+
   appEl.classList.remove("app-default");
   appEl.classList.add("app");
 }
