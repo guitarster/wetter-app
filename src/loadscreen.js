@@ -1,17 +1,15 @@
-const appEl = document.querySelector(".app-default");
+const body = document.getElementsByTagName("body");
 
 export function renderLoadScreen(location) {
-  appEl.innerHTML += `
-  <div class="lds-ring">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
+  body[0].innerHTML = `
+  <div id="app-loading-detailview">
+    <div class="lds-ring">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <div class="loading__message">Lade Wetter für ${location}</div>
   </div>
-
 `;
-
-  appEl.innerHTML += `
-  <div class="loading__message">  Lade Wetter für ${location}</div>
-  `;
 }

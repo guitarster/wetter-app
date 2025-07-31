@@ -1,24 +1,18 @@
-import { loadWeather } from "./detailview.js";
+import { loadApp } from "./detailview.js";
 import { renderLoadScreen } from "./loadscreen.js";
+import { renderStartScreen } from "./startscreen.js";
 
-const appEl = document.querySelector(".app-default");
+const body = document.getElementsByTagName("body");
 
-const location = "Dunningen";
+renderStartScreen();
 
-renderLoadScreen(location);
+const location = document.getElementById(1).innerHTML;
+const favourite = document.querySelector(".favourite");
 
-display();
+favourite.addEventListener("click", displayDetailView);
 
-async function display() {
-  await loadWeather(location);
+function displayDetailView() {
+  renderLoadScreen(location);
 
-  const appEl = document.querySelector(".app-default");
-  const spinnerEl = document.querySelector(".lds-ring");
-  const loadingMessage = document.querySelector(".loading__message");
-
-  spinnerEl.innerHTML = "";
-  loadingMessage.innerHTML = "";
-
-  appEl.classList.remove("app-default");
-  appEl.classList.add("app");
+  loadApp(location);
 }

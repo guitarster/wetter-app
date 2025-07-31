@@ -2,6 +2,7 @@
 @use "mixins" as *;
 @use "detailview" as *;
 @use "loading" as *;
+@use "startscreen" as *;
 
 * {
   margin: 0;
@@ -18,14 +19,19 @@ body {
   min-height: 100vh;
 }
 
-.app-default {
-  @include app;
+#app-start {
+  @include apps;
   background: linear-gradient(0deg, #404547, #252e3a 51%);
-  justify-content: center;
 }
 
-.app {
-  @include app;
+#app-detailview {
+  @include apps;
+}
+
+#app-loading-detailview {
+  @include apps;
+  justify-content: center;
+  background: linear-gradient(0deg, #404547, #252e3a 51%);
 }
 
 .loading__message {

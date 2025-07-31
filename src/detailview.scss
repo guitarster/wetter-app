@@ -30,7 +30,7 @@
 
 .forecast-hourly {
   @include card;
-  width: 92%;
+  width: 91%;
 
   &__title {
     @include title;
@@ -55,7 +55,7 @@
 
 .forecast-day {
   @include card;
-  width: 92%;
+  width: 91%;
 
   &__forecast {
     align-items: center;

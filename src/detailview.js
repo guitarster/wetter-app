@@ -7,9 +7,16 @@ import {
 } from "./utils.js";
 import { getConditionImagePath } from "./conditions.js";
 
-const appEl = document.querySelector(".app-default");
+const body = document.getElementsByTagName("body");
+let app = "";
 
-export async function loadWeather(location) {
+export function loadApp(location) {
+  renderApp();
+  app = document.getElementById("app-detailview");
+  loadWeather(location);
+}
+
+async function loadWeather(location) {
   const forecastWeather = await getForecastWeather(location);
   const currentDay = forecastWeather.forecast.forecastday[0];
   const current = forecastWeather.current;
@@ -157,6 +164,13 @@ function loadBackgroundImage(current) {
   renderBackgroundImage(imagePath);
 }
 
+function renderApp() {
+  body[0].innerHTML = `
+  <div id="app-detailview">
+  </div>
+  `;
+}
+
 function renderCurrentWeather(
   locationName,
   temperature,
@@ -164,21 +178,21 @@ function renderCurrentWeather(
   maxTemperature,
   minTemperature
 ) {
-  appEl.innerHTML += `
+  app.innerHTML += `
     <div class="current-weather">
       <div class="current-weather__location">${locationName}</div>
       <div class="current-weather__temperature">${temperature}°</div>
       <div class="current-weather__condition">${conditionText}</div>
       <div class="current-weather__max-and-min-temperature">
-        <div class="curent-weather__max-temperature">${maxTemperature}°</div>
-        <div class="curent-weather__min-temperature">${minTemperature}°</div>
+        <div class="curent-weather__max-temperature">H: ${maxTemperature}°</div>
+        <div class="curent-weather__min-temperature">T: ${minTemperature}°</div>
     </div>
     </div>
         `;
 }
 
 function renderForecastHourlyTitle(conditionForecastText, maxWindForecast) {
-  appEl.innerHTML += `
+  app.innerHTML += `
   <div class="forecast-hourly">
     <div class="forecast-hourly__title">Heute ${conditionForecastText}. Wind bis zu ${maxWindForecast} km/h.</div>
     <div class="forecast-hourly__forecasts"></div>
@@ -222,7 +236,7 @@ function renderForecastDaysForecasts(
   const dayAfterTomorrow = today + 2;
   const dayNames = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
 
-  appEl.innerHTML += `
+  app.innerHTML += `
         <div class="forecast-day">
         <div class="forecast-day__title">
           Vorhersage für die nächsten 3 Tage:
@@ -266,7 +280,7 @@ function renderForecastDaysForecasts(
 }
 
 function renderMiniStats(humidity, feelsLike, sunrise, sunset, precip, uv) {
-  appEl.innerHTML += `
+  app.innerHTML += `
   <div class="mini-stats">
     <div class="mini-stat">
       <span class="mini-stat__title">Feuchtigkeit</span>
@@ -297,7 +311,7 @@ function renderMiniStats(humidity, feelsLike, sunrise, sunset, precip, uv) {
 }
 
 function renderBackgroundImage(imagePath) {
-  appEl.setAttribute(
+  app.setAttribute(
     "style",
     `background-image: linear-gradient(0deg,#0003,#0003), url("${imagePath}"); background-size: cover; background-position: center;`
   );
