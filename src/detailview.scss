@@ -30,7 +30,7 @@
 
 .forecast-hourly {
   @include card;
-  width: 90%;
+  width: 92%;
 
   &__title {
     @include title;
@@ -55,7 +55,7 @@
 
 .forecast-day {
   @include card;
-  width: 90%;
+  width: 92%;
 
   &__forecast {
     align-items: center;
@@ -76,6 +76,7 @@
   grid-template-columns: 1fr 1fr;
   column-gap: 1rem;
   margin-top: 1rem;
+  width: 100%;
 }
 
 .mini-stat {
