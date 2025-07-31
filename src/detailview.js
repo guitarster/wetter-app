@@ -5,6 +5,7 @@ import {
   splitTime,
   splitTimePM,
 } from "./utils.js";
+import { getConditionImagePath } from "./conditions.js";
 
 const appEl = document.querySelector(".app-default");
 
@@ -12,6 +13,8 @@ export async function loadWeather(location) {
   const forecastWeather = await getForecastWeather(location);
   const currentDay = forecastWeather.forecast.forecastday[0];
   const current = forecastWeather.current;
+
+  loadBackgroundImage(current);
 
   loadCurrentWeather(forecastWeather, currentDay);
 
@@ -138,6 +141,20 @@ function loadMiniStats(current, currentDay) {
   const precip = currentDay.day.totalprecip_mm;
   const uv = current.uv;
   renderMiniStats(humidity, feelsLike, sunrise, sunset, precip, uv);
+}
+
+function loadBackgroundImage(current) {
+  const conditionId = current.condition.code;
+  const isDay = current.is_day;
+  let imagePath = "";
+
+  if (isDay === 1) {
+    imagePath = getConditionImagePath(conditionId);
+  } else {
+    imagePath = getConditionImagePath(conditionId, true);
+  }
+
+  renderBackgroundImage(imagePath);
 }
 
 function renderCurrentWeather(
@@ -277,4 +294,11 @@ function renderMiniStats(humidity, feelsLike, sunrise, sunset, precip, uv) {
     </div>
   </div>
   `;
+}
+
+function renderBackgroundImage(imagePath) {
+  appEl.setAttribute(
+    "style",
+    `background-image: linear-gradient(0deg,#0003,#0003), url("${imagePath}"); background-size: cover; background-position: center;`
+  );
 }
