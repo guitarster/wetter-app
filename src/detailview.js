@@ -1,11 +1,17 @@
 import { getForecastWeather } from "./API.js";
-import { roundNumber, formatHourlyTime } from "./utils.js";
+import {
+  roundNumber,
+  formatHourlyTime,
+  splitTime,
+  splitTimePM,
+} from "./utils.js";
 
 const appEl = document.querySelector(".app-default");
 
 export async function loadWeather(location) {
   const forecastWeather = await getForecastWeather(location);
   const currentDay = forecastWeather.forecast.forecastday[0];
+  const current = forecastWeather.current;
 
   loadCurrentWeather(forecastWeather, currentDay);
 
@@ -14,6 +20,8 @@ export async function loadWeather(location) {
   loadForecastHourlyForecasts(forecastWeather, currentDay);
 
   loadForecastDaysForecasts(forecastWeather);
+
+  loadMiniStats(current, currentDay);
 }
 
 function loadCurrentWeather(forecastWeather, currentDay) {
@@ -122,6 +130,16 @@ function loadForecastDaysForecasts(forecastWeather) {
   );
 }
 
+function loadMiniStats(current, currentDay) {
+  const humidity = current.humidity;
+  const feelsLike = current.feelslike_c;
+  const sunrise = currentDay.astro.sunrise;
+  const sunset = currentDay.astro.sunset;
+  const precip = currentDay.day.totalprecip_mm;
+  const uv = current.uv;
+  renderMiniStats(humidity, feelsLike, sunrise, sunset, precip, uv);
+}
+
 function renderCurrentWeather(
   locationName,
   temperature,
@@ -227,5 +245,36 @@ function renderForecastDaysForecasts(
             <span class="forecast-day__wind">Wind: ${maxWindDayAfterTomorrow} km/h</span>
           </div>
         </div>
+  `;
+}
+
+function renderMiniStats(humidity, feelsLike, sunrise, sunset, precip, uv) {
+  appEl.innerHTML += `
+  <div class="mini-stats">
+    <div class="mini-stat">
+      <span class="mini-stat__title">Feuchtigkeit</span>
+      <span class="mini-stat__value">${humidity}%</span>
+    </div>
+    <div class="mini-stat">
+      <span class="mini-stat__title">Gefühlt</span>
+      <span class="mini-stat__value">${roundNumber(feelsLike)}°</span>
+    </div>
+    <div class="mini-stat">
+      <span class="mini-stat__title">Sonnenaufgang</span>
+      <span class="mini-stat__value">${splitTime(sunrise)} Uhr</span>
+    </div>
+    <div class="mini-stat">
+      <span class="mini-stat__title">Sonnenuntergang</span>
+      <span class="mini-stat__value">${splitTimePM(sunset)} Uhr</span>
+    </div>
+    <div class="mini-stat">
+      <span class="mini-stat__title">Niederschlag</span>
+      <span class="mini-stat__value">${precip} mm</span>
+    </div>
+    <div class="mini-stat">
+      <span class="mini-stat__title">UV-Index</span>
+      <span class="mini-stat__value">${uv}</span>
+    </div>
+  </div>
   `;
 }
