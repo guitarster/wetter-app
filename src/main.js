@@ -3,7 +3,7 @@ import { renderLoadScreen } from "./loadscreen.js";
 
 const appEl = document.querySelector(".app-default");
 
-const location = "New York";
+const location = "Dunningen";
 
 renderLoadScreen(location);
 

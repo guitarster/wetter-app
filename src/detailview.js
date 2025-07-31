@@ -1,6 +1,8 @@
 import { getForecastWeather } from "./API.js";
 import { roundNumber, formatHourlyTime } from "./utils.js";
 
+const appEl = document.querySelector(".app-default");
+
 export async function loadWeather(location) {
   const forecastWeather = await getForecastWeather(location);
   const currentDay = forecastWeather.forecast.forecastday[0];
@@ -45,19 +47,19 @@ function loadForecastHourlyForecasts(forecastWeather, currentDay) {
   let counterCurrentDay = 0;
 
   for (let element of forecastHours) {
-    counterCurrentDay++;
-
     const forecastHour = formatHourlyTime(element.time);
     const forecastTemperature = element.temp_c;
     const forecastIcon = element.condition.icon;
 
     if (forecastHour === currentTime) {
+      counterCurrentDay++;
       renderForecastHourlyForecasts(
         "Jetzt",
         forecastIcon,
         roundNumber(forecastTemperature)
       );
     } else if (forecastHour >= currentTime) {
+      counterCurrentDay++;
       renderForecastHourlyForecasts(
         forecastHour + " Uhr",
         forecastIcon,
@@ -127,24 +129,26 @@ function renderCurrentWeather(
   maxTemperature,
   minTemperature
 ) {
-  const currentWeatherEl = document.querySelector(".current-weather");
-
-  currentWeatherEl.innerHTML = `
-        <div class="current-weather__location">${locationName}</div>
-        <div class="current-weather__temperature">${temperature}°</div>
-        <div class="current-weather__condition">${conditionText}</div>
-        <div class="current-weather__max-and-min-temperature">
-          <div class="curent-weather__max-temperature">${maxTemperature}°</div>
-          <div class="curent-weather__min-temperature">${minTemperature}°</div>
-        </div>`;
+  appEl.innerHTML += `
+    <div class="current-weather">
+      <div class="current-weather__location">${locationName}</div>
+      <div class="current-weather__temperature">${temperature}°</div>
+      <div class="current-weather__condition">${conditionText}</div>
+      <div class="current-weather__max-and-min-temperature">
+        <div class="curent-weather__max-temperature">${maxTemperature}°</div>
+        <div class="curent-weather__min-temperature">${minTemperature}°</div>
+    </div>
+    </div>
+        `;
 }
 
 function renderForecastHourlyTitle(conditionForecastText, maxWindForecast) {
-  const forecastHourlyTitleEl = document.querySelector(
-    ".forecast-hourly__title"
-  );
-  forecastHourlyTitleEl.innerHTML = `
-  Heute ${conditionForecastText}. Wind bis zu ${maxWindForecast} km/h.`;
+  appEl.innerHTML += `
+  <div class="forecast-hourly">
+    <div class="forecast-hourly__title">Heute ${conditionForecastText}. Wind bis zu ${maxWindForecast} km/h.</div>
+    <div class="forecast-hourly__forecasts"></div>
+  </div>
+  `;
 }
 
 function renderForecastHourlyForecasts(
@@ -178,14 +182,12 @@ function renderForecastDaysForecasts(
   maxWindTomorrow,
   maxWindDayAfterTomorrow
 ) {
-  const forecastDaysForecastsEl = document.querySelector(".app-default");
-
   const today = new Date().getDay();
   const tomorrow = today + 1;
   const dayAfterTomorrow = today + 2;
   const dayNames = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
 
-  forecastDaysForecastsEl.innerHTML += `
+  appEl.innerHTML += `
         <div class="forecast-day">
         <div class="forecast-day__title">
           Vorhersage für die nächsten 3 Tage:

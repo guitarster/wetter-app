@@ -1,13 +1,17 @@
-const spinnerEl = document.querySelector(".lds-ring");
-const loadingMessage = document.querySelector(".loading__message");
+const appEl = document.querySelector(".app-default");
 
 export function renderLoadScreen(location) {
-  spinnerEl.innerHTML = `
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
+  appEl.innerHTML += `
+  <div class="lds-ring">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
 `;
 
-  loadingMessage.innerHTML = `Lade Wetter für ${location}`;
+  appEl.innerHTML += `
+  <div class="loading__message">  Lade Wetter für ${location}</div>
+  `;
 }
