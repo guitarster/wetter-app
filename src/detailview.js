@@ -155,7 +155,6 @@ function loadBackgroundImage(current) {
   }
 
   renderBackgroundImage(imagePath);
-  console.log(imagePath);
 }
 
 function renderCurrentWeather(
