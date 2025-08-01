@@ -9,10 +9,22 @@ export function renderStartScreen() {
         </div>
         <input class="searchfield" placeholder="Nach Stadt suchen..." />
         <div class="favourites">
+            <div id=1 class="favourite">
+                <div class="favourite__location">
+                    <span class="favourite__city">Dunningen</span>
+                    <span class="favourite__country">Germany</span>
+                </div>
+                <div class="favourite__temperature">22°</div>
+                <div class="favourite__condition">Sonnig</div>
+                <div class="favourite__max-min-temp">
+                    <span class="favourite__max-temp">H: 21°</span>
+                    <span class="favourite__min-temp">T: 11°</span>
+                </div>
+            </div>
             <div id=2 class="favourite">
                 <div class="favourite__location">
-                    <span id=1 class="favourite__city">Dunningen</span>
-                    <span class="favourite__country">Germany</span>
+                    <span class="favourite__city">Peking</span>
+                    <span class="favourite__country">China</span>
                 </div>
                 <div class="favourite__temperature">22°</div>
                 <div class="favourite__condition">Sonnig</div>
@@ -21,22 +33,10 @@ export function renderStartScreen() {
                     <span class="favourite__min-temp">T: 11°</span>
                 </div>
             </div>
-                <div class="favourite">
+            <div id=3 class="favourite">
                 <div class="favourite__location">
-                    <span class="favourite__city">Dunningen</span>
-                    <span class="favourite__country">Germany</span>
-                </div>
-                <div class="favourite__temperature">22°</div>
-                <div class="favourite__condition">Sonnig</div>
-                <div class="favourite__max-min-temp">
-                    <span class="favourite__max-temp">H: 21°</span>
-                    <span class="favourite__min-temp">T: 11°</span>
-                </div>
-            </div>
-            <div class="favourite">
-                <div class="favourite__location">
-                    <span class="favourite__city">Dunningen</span>
-                    <span class="favourite__country">Germany</span>
+                    <span class="favourite__city">New York</span>
+                    <span class="favourite__country">USA</span>
                 </div>
                 <div class="favourite__temperature">22°</div>
                 <div class="favourite__condition">Sonnig</div>

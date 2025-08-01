@@ -6,13 +6,13 @@ import {
   splitTimePM,
 } from "./utils.js";
 import { getConditionImagePath } from "./conditions.js";
+import { renderLoadScreen } from "./loadscreen.js";
 
 const body = document.getElementsByTagName("body");
 let app = "";
 
-export function loadApp(location) {
-  renderApp();
-  app = document.getElementById("app-detailview");
+export function loadDetailView(location) {
+  renderLoadScreen(location);
   loadWeather(location);
 }
 
@@ -20,6 +20,9 @@ async function loadWeather(location) {
   const forecastWeather = await getForecastWeather(location);
   const currentDay = forecastWeather.forecast.forecastday[0];
   const current = forecastWeather.current;
+
+  renderApp();
+  app = document.getElementById("app-detailview");
 
   loadBackgroundImage(current);
 
