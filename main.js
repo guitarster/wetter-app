@@ -1,10 +1,11 @@
-import { loadDetailView } from "./src/detailview";
-import { renderStartScreen } from "./src/startscreen.js";
+import { loadStartScreen } from "./src/startscreen.js";
 
 const body = document.getElementsByTagName("body");
 
-renderStartScreen();
+const location = ["Dunningen", "Peking", "New York"];
 
-const favourite = document.querySelector(".favourite");
+loadStartScreen(location);
 
-favourite.addEventListener("click", loadDetailView.bind(this, "Dunningen"));
+document.addEventListener("DOMContentLoaded", (event) => {
+  console.log(document.getElementById("Dunningen"));
+});

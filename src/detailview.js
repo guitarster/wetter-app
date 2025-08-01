@@ -24,7 +24,9 @@ async function loadWeather(location) {
   renderApp();
   app = document.getElementById("app-detailview");
 
-  loadBackgroundImage(current);
+  const imagePath = loadBackgroundImage(current);
+
+  renderBackgroundImage(imagePath);
 
   loadCurrentWeather(forecastWeather, currentDay);
 
@@ -153,7 +155,7 @@ function loadMiniStats(current, currentDay) {
   renderMiniStats(humidity, feelsLike, sunrise, sunset, precip, uv);
 }
 
-function loadBackgroundImage(current) {
+export function loadBackgroundImage(current) {
   const conditionId = current.condition.code;
   const isDay = current.is_day;
   let imagePath = "";
@@ -164,7 +166,7 @@ function loadBackgroundImage(current) {
     imagePath = getConditionImagePath(conditionId, true);
   }
 
-  renderBackgroundImage(imagePath);
+  return imagePath;
 }
 
 function renderApp() {
