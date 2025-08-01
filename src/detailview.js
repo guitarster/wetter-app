@@ -237,8 +237,20 @@ function renderForecastDaysForecasts(
   maxWindDayAfterTomorrow
 ) {
   const today = new Date().getDay();
-  const tomorrow = today + 1;
-  const dayAfterTomorrow = today + 2;
+
+  let tomorrow = 0;
+  if (today === 6) {
+    tomorrow === 0;
+  } else {
+    tomorrow = today + 1;
+  }
+
+  let dayAfterTomorrow = 0;
+  if (tomorrow === 6) {
+    dayAfterTomorrow = 0;
+  } else {
+    dayAfterTomorrow = today + 2;
+  }
   const dayNames = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
 
   app.innerHTML += `

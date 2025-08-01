@@ -1,31 +1,17 @@
 import { getForecastWeather } from "./API.js";
 import { roundNumber } from "./utils.js";
 import { loadBackgroundImage } from "./detailview.js";
-//import { loadDetailView } from "./detailview.js";
+import { loadDetailView } from "./detailview.js";
 
 const body = document.getElementsByTagName("body");
 
-//let eventListeners = [];
-
-export async function loadStartScreen(location) {
+export function loadStartScreen(location) {
   renderStartScreen();
 
   location.forEach((element) => {
     renderFavourite(element);
   });
-
-  // setEventListeners(location);
 }
-
-/*function setEventListeners(location) {
-  location.forEach((element) => {
-    const favourite = document.getElementById(element);
-    console.log(favourite);
-    eventListeners.push(
-      favourite.addEventListener("click", loadDetailView.bind(this, element))
-    );
-  });
-} */
 
 async function renderFavourite(location) {
   const weatherData = await getForecastWeather(location);
@@ -55,6 +41,12 @@ async function renderFavourite(location) {
         </div>
     </div>
     `;
+
+  favouritesEl.addEventListener("click", function (event) {
+    if (event.target.id === location) {
+      loadDetailView(location);
+    }
+  });
 }
 
 function renderStartScreen() {
