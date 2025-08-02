@@ -39,8 +39,7 @@ async function renderStartScreen(location) {
     </div>
     `;
 
-  const favouritesEl = document.querySelector(".favourites");
-  registerEventListener(favouritesEl);
+  registerEventListener();
 }
 
 async function loadFavourite(location) {
@@ -71,10 +70,14 @@ async function loadFavourite(location) {
     </div>`;
 }
 
-function registerEventListener(favouritesEl) {
-  favouritesEl.addEventListener("click", function (event) {
-    if (event.target.id) {
-      loadDetailView(event.target.id);
-    }
+function registerEventListener() {
+  const favourites = document.querySelectorAll(".favourite");
+
+  favourites.forEach((favourite) => {
+    favourite.addEventListener("click", () => {
+      const favouriteID = favourite.getAttribute("id");
+
+      loadDetailView(favouriteID);
+    });
   });
 }
