@@ -6,7 +6,9 @@ import { renderLoadScreen } from "./loadscreen.js";
 
 const body = document.getElementsByTagName("body");
 
-export function loadStartScreen(location) {
+const location = ["Dunningen", "Peking", "New York"];
+
+export function loadStartScreen() {
   renderLoadScreen("Lade Übersicht");
 
   renderStartScreen(location);

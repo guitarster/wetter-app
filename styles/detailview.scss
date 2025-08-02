@@ -1,6 +1,20 @@
 @use "variables" as *;
 @use "mixins" as *;
 
+.navbar {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+
+  &__back-btn {
+    @include navbar-buttons;
+  }
+
+  &__favourite-btn {
+    @include navbar-buttons;
+  }
+}
+
 .current-weather {
   display: flex;
   flex-direction: column;

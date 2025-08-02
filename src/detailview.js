@@ -7,6 +7,7 @@ import {
 } from "./utils.js";
 import { getConditionImagePath } from "./conditions.js";
 import { renderLoadScreen } from "./loadscreen.js";
+import { loadStartScreen } from "./startscreen.js";
 
 const body = document.getElementsByTagName("body");
 let app = "";
@@ -28,6 +29,8 @@ async function loadWeather(location) {
 
   renderBackgroundImage(imagePath);
 
+  renderNavBar(location);
+
   loadCurrentWeather(forecastWeather, currentDay);
 
   loadForecastHourlyTitle(currentDay);
@@ -37,6 +40,8 @@ async function loadWeather(location) {
   loadForecastDaysForecasts(forecastWeather);
 
   loadMiniStats(current, currentDay);
+
+  registerEventListener();
 }
 
 function loadCurrentWeather(forecastWeather, currentDay) {
@@ -174,6 +179,22 @@ function renderApp() {
   <div id="app-detailview">
   </div>
   `;
+}
+
+function renderNavBar(location) {
+  app.innerHTML += `
+  <div class="navbar">
+      <img
+        src="./public/back-svgrepo-com.svg"
+        alt=""
+        class="navbar__back-btn"
+      />
+      <img
+        src="./public/favorite-svgrepo-com.svg"
+        alt=""
+        class="navbar__favourite-btn"
+      />
+  </div>`;
 }
 
 function renderCurrentWeather(
@@ -332,4 +353,10 @@ function renderBackgroundImage(imagePath) {
     "style",
     `background-image: linear-gradient(0deg,#0003,#0003), url("${imagePath}"); background-size: cover; background-position: center;`
   );
+}
+
+function registerEventListener() {
+  const backBtnEl = document.querySelector(".navbar__back-btn");
+
+  backBtnEl.addEventListener("click", loadStartScreen);
 }

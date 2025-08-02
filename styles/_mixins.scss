@@ -33,3 +33,7 @@
   padding-bottom: 0.5rem;
   width: 100%;
 }
+
+@mixin navbar-buttons {
+  width: 2rem;
+}
