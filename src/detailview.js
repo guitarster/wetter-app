@@ -185,12 +185,12 @@ function renderNavBar(location) {
   app.innerHTML += `
   <div class="navbar">
       <img
-        src="./public/back-svgrepo-com.svg"
+        src="./back-svgrepo-com.svg"
         alt=""
         class="navbar__back-btn"
       />
       <img
-        src="./public/favorite-svgrepo-com.svg"
+        src="./favorite-svgrepo-com.svg"
         alt=""
         class="navbar__favourite-btn"
       />
