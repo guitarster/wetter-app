@@ -7,9 +7,9 @@ import { renderLoadScreen } from "./loadscreen.js";
 const body = document.getElementsByTagName("body");
 
 export function loadStartScreen() {
-  let location = JSON.parse(localStorage.getItem("favourites"));
-
   renderLoadScreen("Lade Übersicht");
+
+  let location = JSON.parse(localStorage.getItem("favourites"));
 
   if (!location) {
     location = [];

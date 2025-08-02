@@ -16,7 +16,6 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
 }
 
 #app-start {
@@ -32,6 +31,7 @@ body {
   @include apps;
   justify-content: center;
   background: linear-gradient(0deg, #404547, #252e3a 51%);
+  height: 100vh;
 }
 
 .loading__message {
