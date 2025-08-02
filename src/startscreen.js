@@ -2,23 +2,52 @@ import { getForecastWeather } from "./API.js";
 import { roundNumber } from "./utils.js";
 import { loadBackgroundImage } from "./detailview.js";
 import { loadDetailView } from "./detailview.js";
+import { renderLoadScreen } from "./loadscreen.js";
 
 const body = document.getElementsByTagName("body");
 
 export function loadStartScreen(location) {
-  renderStartScreen();
+  renderLoadScreen("Lade Übersicht");
 
-  location.forEach((element) => {
-    renderFavourite(element);
-  });
+  renderStartScreen(location);
 }
 
-async function renderFavourite(location) {
-  const weatherData = await getForecastWeather(location);
+async function renderFavourites(location) {
+  let favouritesList = [];
+
+  for (const element of location) {
+    const favouriteHTML = await loadFavourite(element);
+    favouritesList.push(favouriteHTML);
+  }
+
+  const favouritesHTML = favouritesList.join("");
+
+  return favouritesHTML;
+}
+
+async function renderStartScreen(location) {
+  body[0].innerHTML = `
+    <div id="app-start">
+        <div class="headline">
+            <div class="headline__title">Wetter</div>
+            <a href="" class="headline__edit">Bearbeiten</a>
+        </div>
+        <input id="test" class="searchfield" placeholder="Nach Stadt suchen..." />
+        <div class="favourites">
+          ${await renderFavourites(location)}
+        </div>
+    </div>
+    `;
+
   const favouritesEl = document.querySelector(".favourites");
+  registerEventListener(favouritesEl);
+}
+
+async function loadFavourite(location) {
+  const weatherData = await getForecastWeather(location);
   const backgroundImagePath = loadBackgroundImage(weatherData.current);
-  favouritesEl.innerHTML += `
-    <div class="favourite" id='${location}' style="background-image: linear-gradient(0deg,#0003,#0003), url(${backgroundImagePath}); background-size: cover; background-position: center;">
+
+  return `<div class="favourite" id='${location}' style="background-image: linear-gradient(0deg,#0003,#0003), url(${backgroundImagePath}); background-size: cover; background-position: center;">
         <div class="favourite__location">
             <span class="favourite__city">${weatherData.location.name}</span>
             <span class="favourite__country">${
@@ -39,25 +68,13 @@ async function renderFavourite(location) {
               weatherData.forecast.forecastday[0].day.mintemp_c
             )}°</span>
         </div>
-    </div>
-    `;
-
-  favouritesEl.addEventListener("click", function (event) {
-    if (event.target.id === location) {
-      loadDetailView(location);
-    }
-  });
+    </div>`;
 }
 
-function renderStartScreen() {
-  body[0].innerHTML = `
-    <div id="app-start">
-        <div class="headline">
-            <div class="headline__title">Wetter</div>
-            <a href="" class="headline__edit">Bearbeiten</a>
-        </div>
-        <input id="test" class="searchfield" placeholder="Nach Stadt suchen..." />
-        <div class="favourites"></div>
-    </div>
-    `;
+function registerEventListener(favouritesEl) {
+  favouritesEl.addEventListener("click", function (event) {
+    if (event.target.id) {
+      loadDetailView(event.target.id);
+    }
+  });
 }

@@ -12,7 +12,7 @@ const body = document.getElementsByTagName("body");
 let app = "";
 
 export function loadDetailView(location) {
-  renderLoadScreen(location);
+  renderLoadScreen(`Lade Wetter für ${location}`);
   loadWeather(location);
 }
 

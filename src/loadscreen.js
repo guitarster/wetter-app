@@ -1,6 +1,6 @@
 const body = document.getElementsByTagName("body");
 
-export function renderLoadScreen(location) {
+export function renderLoadScreen(message) {
   body[0].innerHTML = `
   <div id="app-loading-detailview">
     <div class="lds-ring">
@@ -9,7 +9,7 @@ export function renderLoadScreen(location) {
       <div></div>
       <div></div>
     </div>
-    <div class="loading__message">Lade Wetter für ${location}</div>
+    <div class="loading__message">${message}</div>
   </div>
 `;
 }
