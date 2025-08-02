@@ -352,14 +352,21 @@ function storeFavourite() {
   const favouriteName = document.querySelector(
     ".current-weather__location"
   ).innerHTML;
-  if (favouritesFromStorage) {
-    favouritesFromStorage.push(favouriteName);
-    localStorage.setItem("favourites", JSON.stringify(favouritesFromStorage));
-  } else {
+
+  if (!favouritesFromStorage) {
     favouritesFromStorage = [];
-    favouritesFromStorage.push(favouriteName);
-    localStorage.setItem("favourites", JSON.stringify(favouritesFromStorage));
   }
+
+  if (favouritesFromStorage.find((element) => element === favouriteName)) {
+    favouritesFromStorage.splice(
+      favouritesFromStorage.indexOf(favouriteName),
+      1
+    );
+  } else {
+    favouritesFromStorage.push(favouriteName);
+  }
+
+  localStorage.setItem("favourites", JSON.stringify(favouritesFromStorage));
 }
 
 function registerEventListener() {
