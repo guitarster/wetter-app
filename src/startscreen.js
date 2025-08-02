@@ -9,13 +9,17 @@ const body = document.getElementsByTagName("body");
 export function loadStartScreen() {
   renderLoadScreen("Lade Übersicht");
 
+  renderStartScreen(getLocations());
+}
+
+function getLocations() {
   let location = JSON.parse(localStorage.getItem("favourites"));
 
   if (!location) {
     location = [];
   }
 
-  renderStartScreen(location);
+  return location;
 }
 
 async function renderFavourites(location) {
@@ -26,9 +30,7 @@ async function renderFavourites(location) {
     favouritesList.push(favouriteHTML);
   }
 
-  const favouritesHTML = favouritesList.join("");
-
-  return favouritesHTML;
+  return favouritesList.join("");
 }
 
 async function renderStartScreen(location) {
@@ -36,7 +38,7 @@ async function renderStartScreen(location) {
     <div id="app-start">
         <div class="headline">
             <div class="headline__title">Wetter</div>
-            <a href="" class="headline__edit">Bearbeiten</a>
+            <span class="headline__edit">Bearbeiten</span>
         </div>
         <input id="test" class="searchfield" placeholder="Nach Stadt suchen..." />
         <div class="favourites">
@@ -52,12 +54,15 @@ async function loadFavourite(location) {
   const weatherData = await getForecastWeather(location);
   const backgroundImagePath = loadBackgroundImage(weatherData.current);
 
-  return `<div class="favourite" id='${location}' style="background-image: linear-gradient(0deg,#0003,#0003), url(${backgroundImagePath}); background-size: cover; background-position: center;">
+  return `
+    <div class="wrapper">
+      <div class="delete-button">Delete</div>
+      <div class="favourite" id='${location}' style="background-image: linear-gradient(0deg,#0003,#0003), url(${backgroundImagePath}); background-size: cover; background-position: center;">
         <div class="favourite__location">
-            <span class="favourite__city">${weatherData.location.name}</span>
-            <span class="favourite__country">${
-              weatherData.location.country
-            }</span>
+          <span class="favourite__city">${weatherData.location.name}</span>
+          <span class="favourite__country">${
+            weatherData.location.country
+          }</span>
         </div>
         <div class="favourite__temperature">${roundNumber(
           weatherData.current.temp_c
@@ -73,11 +78,27 @@ async function loadFavourite(location) {
               weatherData.forecast.forecastday[0].day.mintemp_c
             )}°</span>
         </div>
+      </div>
     </div>`;
+}
+
+function displayDeleteButton() {
+  const deleteButtonEl = document.querySelectorAll(".delete-button");
+
+  if (document.querySelectorAll(".delete-button-display").length > 0) {
+    deleteButtonEl.forEach((button) =>
+      button.classList.remove("delete-button-display")
+    );
+  } else {
+    deleteButtonEl.forEach((button) =>
+      button.classList.add("delete-button-display")
+    );
+  }
 }
 
 function registerEventListener() {
   const favourites = document.querySelectorAll(".favourite");
+  const editBtnEl = document.querySelector(".headline__edit");
 
   favourites.forEach((favourite) => {
     favourite.addEventListener("click", () => {
@@ -86,4 +107,6 @@ function registerEventListener() {
       loadDetailView(favouriteID);
     });
   });
+
+  editBtnEl.addEventListener("click", displayDeleteButton);
 }
