@@ -99,22 +99,16 @@ function displayDeleteButton() {
   const deleteButtonEl = document.querySelectorAll(".delete-button");
   const editBtnEl = document.querySelector(".headline__edit");
 
-  if (document.querySelectorAll(".delete-button-display").length > 0) {
-    deleteButtonEl.forEach((button) =>
-      button.classList.remove("delete-button-display")
-    );
-    editBtnEl.innerHTML = `Bearbeiten`;
-  } else {
+  if (editBtnEl.innerHTML === "Bearbeiten") {
     deleteButtonEl.forEach((button) =>
       button.classList.add("delete-button-display")
     );
-    editBtnEl.innerHTML = `Fertig`;
-  }
-
-  const favoritesFromStorage = JSON.parse(localStorage.getItem("favorites"));
-
-  if (favoritesFromStorage.length === 0) {
-    editBtnEl.innerHTML = `Bearbeiten`;
+    editBtnEl.innerHTML = "Fertig";
+  } else {
+    deleteButtonEl.forEach((button) =>
+      button.classList.remove("delete-button-display")
+    );
+    editBtnEl.innerHTML = "Bearbeiten";
   }
 }
 
