@@ -29,7 +29,7 @@
   padding: 0.5rem;
 }
 
-.favourites {
+.favorites {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -51,9 +51,11 @@
 
 .delete-button-display {
   display: unset;
+  @include navbar-buttons;
+  cursor: pointer;
 }
 
-.favourite {
+.favorite {
   box-sizing: border-box;
   display: grid;
   width: 100%;

@@ -191,23 +191,23 @@ function renderNavBar() {
 }
 
 function renderNavBarIcons(location) {
-  const storedLocations = JSON.parse(localStorage.getItem("favourites"));
+  const storedLocations = JSON.parse(localStorage.getItem("favorites"));
   const navbar = document.querySelector(".navbar");
 
   if (storedLocations.find((element) => element === location)) {
     navbar.innerHTML += `
-    <svg class="navbar__favourite-btn-full" fill="#ffffffff" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M476 801l-181 95q-18 10-36.5 4.5T229 879t-7-36l34-202q2-12-1.5-24T242 596L95 453q-15-14-15.5-33.5T91 385t32-18l203-30q12-2 22-9t16-18l90-184q10-18 28-25t36 0 28 25l90 184q6 11 16 18t22 9l203 30q20 3 32 18t11.5 34.5T905 453L758 596q-8 9-12 21t-2 24l34 202q4 20-7 36t-29.5 21.5T705 896l-181-95q-11-6-24-6t-24 6z"></path></g></svg>
+    <svg class="navbar__favorite-btn-full" fill="#ffffffff" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M476 801l-181 95q-18 10-36.5 4.5T229 879t-7-36l34-202q2-12-1.5-24T242 596L95 453q-15-14-15.5-33.5T91 385t32-18l203-30q12-2 22-9t16-18l90-184q10-18 28-25t36 0 28 25l90 184q6 11 16 18t22 9l203 30q20 3 32 18t11.5 34.5T905 453L758 596q-8 9-12 21t-2 24l34 202q4 20-7 36t-29.5 21.5T705 896l-181-95q-11-6-24-6t-24 6z"></path></g></svg>
       `;
-    const favouriteFullBtnEl = document.querySelector(
-      ".navbar__favourite-btn-full"
+    const favoriteFullBtnEl = document.querySelector(
+      ".navbar__favorite-btn-full"
     );
-    registerEventListenerStore(favouriteFullBtnEl);
+    registerEventListenerStore(favoriteFullBtnEl);
   } else {
     navbar.innerHTML += `
-    <svg viewBox="0 0 1024 1024" fill="#ffffffff" class="navbar__favourite-btn"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M802.4 967.2c-7.2 0-15.2-1.6-21.6-4.8l-258.4-128.8-252.8 140c-18.4 10.4-41.6 5.6-56-9.6-8.8-9.6-12.8-23.2-11.2-36.8l43.2-285.6L33.6 444C20.8 432 16 414.4 21.6 397.6c4.8-16.8 18.4-28.8 36-31.2l285.6-48L464.8 56c7.2-15.2 22.4-25.6 39.2-26.4 17.6-0.8 33.6 8.8 41.6 24l133.6 256.8 287.2 35.2c17.6 2.4 31.2 13.6 36.8 30.4 5.6 16 1.6 34.4-10.4 46.4L790.4 629.6l55.2 284c2.4 12.8-0.8 26.4-8.8 36.8-8.8 10.4-21.6 16.8-34.4 16.8zM520.8 784.8c7.2 0 15.2 1.6 21.6 4.8l255.2 127.2-54.4-280c-3.2-14.4 1.6-29.6 12-40l200-203.2L672 358.4c-14.4-1.6-28-11.2-34.4-24L506.4 81.6 385.6 340c-6.4 13.6-19.2 23.2-33.6 25.6L70.4 412l208 194.4c11.2 10.4 16 24.8 13.6 40L249.6 928l249.6-137.6c7.2-3.2 14.4-4.8 21.6-5.6z" fill="" /></svg>
+    <svg viewBox="0 0 1024 1024" fill="#ffffffff" class="navbar__favorite-btn"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M802.4 967.2c-7.2 0-15.2-1.6-21.6-4.8l-258.4-128.8-252.8 140c-18.4 10.4-41.6 5.6-56-9.6-8.8-9.6-12.8-23.2-11.2-36.8l43.2-285.6L33.6 444C20.8 432 16 414.4 21.6 397.6c4.8-16.8 18.4-28.8 36-31.2l285.6-48L464.8 56c7.2-15.2 22.4-25.6 39.2-26.4 17.6-0.8 33.6 8.8 41.6 24l133.6 256.8 287.2 35.2c17.6 2.4 31.2 13.6 36.8 30.4 5.6 16 1.6 34.4-10.4 46.4L790.4 629.6l55.2 284c2.4 12.8-0.8 26.4-8.8 36.8-8.8 10.4-21.6 16.8-34.4 16.8zM520.8 784.8c7.2 0 15.2 1.6 21.6 4.8l255.2 127.2-54.4-280c-3.2-14.4 1.6-29.6 12-40l200-203.2L672 358.4c-14.4-1.6-28-11.2-34.4-24L506.4 81.6 385.6 340c-6.4 13.6-19.2 23.2-33.6 25.6L70.4 412l208 194.4c11.2 10.4 16 24.8 13.6 40L249.6 928l249.6-137.6c7.2-3.2 14.4-4.8 21.6-5.6z" fill="" /></svg>
     `;
-    const favouriteBtnEl = document.querySelector(".navbar__favourite-btn");
-    registerEventListenerStore(favouriteBtnEl);
+    const favoriteBtnEl = document.querySelector(".navbar__favorite-btn");
+    registerEventListenerStore(favoriteBtnEl);
   }
 }
 
@@ -369,43 +369,42 @@ function renderBackgroundImage(imagePath) {
   );
 }
 
-function storeFavourite() {
-  let favouritesFromStorage = JSON.parse(localStorage.getItem("favourites"));
-  const favouriteName = document.querySelector(
+function storefavorite() {
+  let favoritesFromStorage = JSON.parse(localStorage.getItem("favorites"));
+  const favoriteName = document.querySelector(
     ".current-weather__location"
   ).innerHTML;
   const navbar = document.querySelector(".navbar");
 
-  if (!favouritesFromStorage) {
-    favouritesFromStorage = [];
+  if (!favoritesFromStorage) {
+    favoritesFromStorage = [];
   }
 
-  if (favouritesFromStorage.find((element) => element === favouriteName)) {
-    favouritesFromStorage.splice(
-      favouritesFromStorage.indexOf(favouriteName),
-      1
+  if (favoritesFromStorage.find((element) => element === favoriteName)) {
+    favoritesFromStorage.splice(favoritesFromStorage.indexOf(favoriteName), 1);
+
+    const favoriteBtnFullEl = document.querySelector(
+      ".navbar__favorite-btn-full"
     );
-    const favouriteBtnFullEl = document.querySelector(
-      ".navbar__favourite-btn-full"
-    );
-    favouriteBtnFullEl.remove();
+
+    favoriteBtnFullEl.remove();
     navbar.innerHTML += `
-        <svg viewBox="0 0 1024 1024" fill="#ffffffff" class="navbar__favourite-btn"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M802.4 967.2c-7.2 0-15.2-1.6-21.6-4.8l-258.4-128.8-252.8 140c-18.4 10.4-41.6 5.6-56-9.6-8.8-9.6-12.8-23.2-11.2-36.8l43.2-285.6L33.6 444C20.8 432 16 414.4 21.6 397.6c4.8-16.8 18.4-28.8 36-31.2l285.6-48L464.8 56c7.2-15.2 22.4-25.6 39.2-26.4 17.6-0.8 33.6 8.8 41.6 24l133.6 256.8 287.2 35.2c17.6 2.4 31.2 13.6 36.8 30.4 5.6 16 1.6 34.4-10.4 46.4L790.4 629.6l55.2 284c2.4 12.8-0.8 26.4-8.8 36.8-8.8 10.4-21.6 16.8-34.4 16.8zM520.8 784.8c7.2 0 15.2 1.6 21.6 4.8l255.2 127.2-54.4-280c-3.2-14.4 1.6-29.6 12-40l200-203.2L672 358.4c-14.4-1.6-28-11.2-34.4-24L506.4 81.6 385.6 340c-6.4 13.6-19.2 23.2-33.6 25.6L70.4 412l208 194.4c11.2 10.4 16 24.8 13.6 40L249.6 928l249.6-137.6c7.2-3.2 14.4-4.8 21.6-5.6z" fill="" /></svg>
+        <svg viewBox="0 0 1024 1024" fill="#ffffffff" class="navbar__favorite-btn"  version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M802.4 967.2c-7.2 0-15.2-1.6-21.6-4.8l-258.4-128.8-252.8 140c-18.4 10.4-41.6 5.6-56-9.6-8.8-9.6-12.8-23.2-11.2-36.8l43.2-285.6L33.6 444C20.8 432 16 414.4 21.6 397.6c4.8-16.8 18.4-28.8 36-31.2l285.6-48L464.8 56c7.2-15.2 22.4-25.6 39.2-26.4 17.6-0.8 33.6 8.8 41.6 24l133.6 256.8 287.2 35.2c17.6 2.4 31.2 13.6 36.8 30.4 5.6 16 1.6 34.4-10.4 46.4L790.4 629.6l55.2 284c2.4 12.8-0.8 26.4-8.8 36.8-8.8 10.4-21.6 16.8-34.4 16.8zM520.8 784.8c7.2 0 15.2 1.6 21.6 4.8l255.2 127.2-54.4-280c-3.2-14.4 1.6-29.6 12-40l200-203.2L672 358.4c-14.4-1.6-28-11.2-34.4-24L506.4 81.6 385.6 340c-6.4 13.6-19.2 23.2-33.6 25.6L70.4 412l208 194.4c11.2 10.4 16 24.8 13.6 40L249.6 928l249.6-137.6c7.2-3.2 14.4-4.8 21.6-5.6z" fill="" /></svg>
 `;
-    const favouriteBtnEl = document.querySelector(".navbar__favourite-btn");
-    registerEventListenerStore(favouriteBtnEl);
+    const favoriteBtnEl = document.querySelector(".navbar__favorite-btn");
+    registerEventListenerStore(favoriteBtnEl);
   } else {
-    favouritesFromStorage.push(favouriteName);
-    const favouriteImage = document.querySelector(".navbar__favourite-btn");
-    favouriteImage.remove();
-    navbar.innerHTML += `<svg class="navbar__favourite-btn-full" fill="#ffffffff" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M476 801l-181 95q-18 10-36.5 4.5T229 879t-7-36l34-202q2-12-1.5-24T242 596L95 453q-15-14-15.5-33.5T91 385t32-18l203-30q12-2 22-9t16-18l90-184q10-18 28-25t36 0 28 25l90 184q6 11 16 18t22 9l203 30q20 3 32 18t11.5 34.5T905 453L758 596q-8 9-12 21t-2 24l34 202q4 20-7 36t-29.5 21.5T705 896l-181-95q-11-6-24-6t-24 6z"></path></g></svg>`;
-    const favouriteBtnFullEl = document.querySelector(
-      ".navbar__favourite-btn-full"
+    favoritesFromStorage.push(favoriteName);
+    const favoriteImage = document.querySelector(".navbar__favorite-btn");
+    favoriteImage.remove();
+    navbar.innerHTML += `<svg class="navbar__favorite-btn-full" fill="#ffffffff" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M476 801l-181 95q-18 10-36.5 4.5T229 879t-7-36l34-202q2-12-1.5-24T242 596L95 453q-15-14-15.5-33.5T91 385t32-18l203-30q12-2 22-9t16-18l90-184q10-18 28-25t36 0 28 25l90 184q6 11 16 18t22 9l203 30q20 3 32 18t11.5 34.5T905 453L758 596q-8 9-12 21t-2 24l34 202q4 20-7 36t-29.5 21.5T705 896l-181-95q-11-6-24-6t-24 6z"></path></g></svg>`;
+    const favoriteBtnFullEl = document.querySelector(
+      ".navbar__favorite-btn-full"
     );
-    registerEventListenerStore(favouriteBtnFullEl);
+    registerEventListenerStore(favoriteBtnFullEl);
   }
 
-  localStorage.setItem("favourites", JSON.stringify(favouritesFromStorage));
+  localStorage.setItem("favorites", JSON.stringify(favoritesFromStorage));
 }
 
 function registerEventListenerStartscreen() {
@@ -414,6 +413,6 @@ function registerEventListenerStartscreen() {
 }
 
 function registerEventListenerStore(element) {
-  element.addEventListener("click", storeFavourite);
+  element.addEventListener("click", storefavorite);
   registerEventListenerStartscreen();
 }

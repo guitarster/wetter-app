@@ -13,7 +13,7 @@ export function loadStartScreen() {
 }
 
 function getLocations() {
-  let location = JSON.parse(localStorage.getItem("favourites"));
+  let location = JSON.parse(localStorage.getItem("favorites"));
 
   if (!location) {
     location = [];
@@ -22,15 +22,15 @@ function getLocations() {
   return location;
 }
 
-async function renderFavourites(location) {
-  let favouritesList = [];
+async function renderfavorites(location) {
+  let favoritesList = [];
 
   for (const element of location) {
-    const favouriteHTML = await loadFavourite(element);
-    favouritesList.push(favouriteHTML);
+    const favoriteHTML = await loadfavorite(element);
+    favoritesList.push(favoriteHTML);
   }
 
-  return favouritesList.join("");
+  return favoritesList.join("");
 }
 
 async function renderStartScreen(location) {
@@ -41,8 +41,8 @@ async function renderStartScreen(location) {
             <span class="headline__edit">Bearbeiten</span>
         </div>
         <input id="test" class="searchfield" placeholder="Nach Stadt suchen..." />
-        <div class="favourites">
-          ${await renderFavourites(location)}
+        <div class="favorites">
+          ${await renderfavorites(location)}
         </div>
     </div>
     `;
@@ -50,31 +50,35 @@ async function renderStartScreen(location) {
   registerEventListener();
 }
 
-async function loadFavourite(location) {
+async function loadfavorite(location) {
   const weatherData = await getForecastWeather(location);
   const backgroundImagePath = loadBackgroundImage(weatherData.current);
 
   return `
-    <div class="wrapper">
-      <div class="delete-button">Delete</div>
-      <div class="favourite" id='${location}' style="background-image: linear-gradient(0deg,#0003,#0003), url(${backgroundImagePath}); background-size: cover; background-position: center;">
-        <div class="favourite__location">
-          <span class="favourite__city">${weatherData.location.name}</span>
-          <span class="favourite__country">${
-            weatherData.location.country
-          }</span>
+    <div id='${location}' class="wrapper">
+      <div class="delete-button"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M10 12V17" stroke="#FF0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M14 12V17" stroke="#FF0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M4 7H20" stroke="#FF0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M6 10V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V10" stroke="#FF0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z" stroke="#FF0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></div>
+      <div class="favorite" style="background-image: linear-gradient(0deg,#0003,#0003), url(${backgroundImagePath}); background-size: cover; background-position: center;">
+        <div class="favorite__location">
+          <span class="favorite__city">${weatherData.location.name}</span>
+          <span class="favorite__country">${weatherData.location.country}</span>
         </div>
-        <div class="favourite__temperature">${roundNumber(
+        <div class="favorite__temperature">${roundNumber(
           weatherData.current.temp_c
         )}°</div>
-        <div class="favourite__condition">${
+        <div class="favorite__condition">${
           weatherData.current.condition.text
         }</div>
-        <div class="favourite__max-min-temp">
-            <span class="favourite__max-temp">H: ${roundNumber(
+        <div class="favorite__max-min-temp">
+            <span class="favorite__max-temp">H: ${roundNumber(
               weatherData.forecast.forecastday[0].day.maxtemp_c
             )}°</span>
-            <span class="favourite__min-temp">T: ${roundNumber(
+            <span class="favorite__min-temp">T: ${roundNumber(
               weatherData.forecast.forecastday[0].day.mintemp_c
             )}°</span>
         </div>
@@ -84,29 +88,56 @@ async function loadFavourite(location) {
 
 function displayDeleteButton() {
   const deleteButtonEl = document.querySelectorAll(".delete-button");
+  const editBtnEl = document.querySelector(".headline__edit");
 
   if (document.querySelectorAll(".delete-button-display").length > 0) {
     deleteButtonEl.forEach((button) =>
       button.classList.remove("delete-button-display")
     );
+    editBtnEl.innerHTML = `Bearbeiten`;
   } else {
     deleteButtonEl.forEach((button) =>
       button.classList.add("delete-button-display")
     );
+    editBtnEl.innerHTML = `Fertig`;
+  }
+
+  const favoritesFromStorage = JSON.parse(localStorage.getItem("favorites"));
+
+  if (favoritesFromStorage.length === 0) {
+    editBtnEl.innerHTML = `Bearbeiten`;
   }
 }
 
+function removeFavorite(favoriteID) {
+  let favoritesFromStorage = JSON.parse(localStorage.getItem("favorites"));
+
+  favoritesFromStorage.splice(favoritesFromStorage.indexOf(favoriteID), 1);
+
+  localStorage.setItem("favorites", JSON.stringify(favoritesFromStorage));
+
+  document.getElementById(favoriteID).remove();
+}
+
 function registerEventListener() {
-  const favourites = document.querySelectorAll(".favourite");
+  const favorites = document.querySelectorAll(".favorite");
   const editBtnEl = document.querySelector(".headline__edit");
+  const deleteBtnsEl = document.querySelectorAll(".delete-button");
 
-  favourites.forEach((favourite) => {
-    favourite.addEventListener("click", () => {
-      const favouriteID = favourite.getAttribute("id");
+  favorites.forEach((favorite) => {
+    favorite.addEventListener("click", () => {
+      const favoriteID = favorite.closest(".wrapper").getAttribute("id");
 
-      loadDetailView(favouriteID);
+      loadDetailView(favoriteID);
     });
   });
 
   editBtnEl.addEventListener("click", displayDeleteButton);
+
+  deleteBtnsEl.forEach((button) => {
+    button.addEventListener("click", () => {
+      const favoriteID = button.closest(".wrapper").getAttribute("id");
+      removeFavorite(favoriteID);
+    });
+  });
 }
