@@ -56,6 +56,7 @@ function renderFavoritesMessage() {
 
   if (!document.querySelector(".wrapper")) {
     appStart.innerHTML += `<span class="message-favorites" >Noch keine Favoriten gespeichert</span>`;
+    registerEventListener();
   }
 }
 
