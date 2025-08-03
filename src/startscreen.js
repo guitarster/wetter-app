@@ -40,7 +40,7 @@ async function renderStartScreen(location) {
             <div class="headline__title">Wetter</div>
             <span class="headline__edit">Bearbeiten</span>
         </div>
-        <input id="test" class="searchfield" placeholder="Nach Stadt suchen..." />
+        <input id="search_location" class="searchfield" placeholder="Nach Stadt suchen..." />
         <div class="favorites">
           ${await renderfavorites(location)}
         </div>

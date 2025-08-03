@@ -22,7 +22,7 @@ async function loadWeather(location) {
   const currentDay = forecastWeather.forecast.forecastday[0];
   const current = forecastWeather.current;
 
-  renderApp();
+  renderApp(location);
   app = document.getElementById("app-detailview");
 
   const imagePath = loadBackgroundImage(current);
@@ -176,9 +176,9 @@ export function loadBackgroundImage(current) {
   return imagePath;
 }
 
-function renderApp() {
+function renderApp(location) {
   body[0].innerHTML = `
-  <div id="app-detailview">
+  <div location-id=${location} id="app-detailview">
   </div>
   `;
 }
@@ -371,17 +371,17 @@ function renderBackgroundImage(imagePath) {
 
 function storefavorite() {
   let favoritesFromStorage = JSON.parse(localStorage.getItem("favorites"));
-  const favoriteName = document.querySelector(
-    ".current-weather__location"
-  ).innerHTML;
+  const favoriteId = document
+    .getElementById("app-detailview")
+    .getAttribute("location-id");
   const navbar = document.querySelector(".navbar");
 
   if (!favoritesFromStorage) {
     favoritesFromStorage = [];
   }
 
-  if (favoritesFromStorage.find((element) => element === favoriteName)) {
-    favoritesFromStorage.splice(favoritesFromStorage.indexOf(favoriteName), 1);
+  if (favoritesFromStorage.find((element) => element === favoriteId)) {
+    favoritesFromStorage.splice(favoritesFromStorage.indexOf(favoriteId), 1);
 
     const favoriteBtnFullEl = document.querySelector(
       ".navbar__favorite-btn-full"
@@ -394,7 +394,7 @@ function storefavorite() {
     const favoriteBtnEl = document.querySelector(".navbar__favorite-btn");
     registerEventListenerStore(favoriteBtnEl);
   } else {
-    favoritesFromStorage.push(favoriteName);
+    favoritesFromStorage.push(favoriteId);
     const favoriteImage = document.querySelector(".navbar__favorite-btn");
     favoriteImage.remove();
     navbar.innerHTML += `<svg class="navbar__favorite-btn-full" fill="#ffffffff" viewBox="0 0 1000 1000" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M476 801l-181 95q-18 10-36.5 4.5T229 879t-7-36l34-202q2-12-1.5-24T242 596L95 453q-15-14-15.5-33.5T91 385t32-18l203-30q12-2 22-9t16-18l90-184q10-18 28-25t36 0 28 25l90 184q6 11 16 18t22 9l203 30q20 3 32 18t11.5 34.5T905 453L758 596q-8 9-12 21t-2 24l34 202q4 20-7 36t-29.5 21.5T705 896l-181-95q-11-6-24-6t-24 6z"></path></g></svg>`;
