@@ -47,7 +47,16 @@ async function renderStartScreen(location) {
     </div>
     `;
 
+  renderFavoritesMessage();
   registerEventListener();
+}
+
+function renderFavoritesMessage() {
+  const appStart = document.getElementById("app-start");
+
+  if (!document.querySelector(".wrapper")) {
+    appStart.innerHTML += `<span class="message-favorites" >Noch keine Favoriten gespeichert</span>`;
+  }
 }
 
 async function loadfavorite(location) {
@@ -117,6 +126,8 @@ function removeFavorite(favoriteID) {
   localStorage.setItem("favorites", JSON.stringify(favoritesFromStorage));
 
   document.getElementById(favoriteID).remove();
+
+  renderFavoritesMessage();
 }
 
 function registerEventListener() {
