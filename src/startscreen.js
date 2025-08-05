@@ -1,4 +1,4 @@
-import { getForecastWeather } from "./API.js";
+import { getForecastWeather, getSuggestions } from "./API.js";
 import { roundNumber } from "./utils.js";
 import { loadBackgroundImage } from "./detailview.js";
 import { loadDetailView } from "./detailview.js";
@@ -42,6 +42,7 @@ async function renderStartScreen(location) {
         </div>
         <div class="wrapper-search-field">
           <input type="text" id="search-field" placeholder="Nach Stadt suchen..." />
+          <div id="locations" class="hide"></div>
         </div>
         <div id="locations" class="hide"></div>
         <div class="favorites">
@@ -132,6 +133,7 @@ function registerEventListener() {
   const favorites = document.querySelectorAll(".favorite");
   const editBtnEl = document.querySelector(".headline__edit");
   const deleteBtnsEl = document.querySelectorAll(".delete-button");
+  const inputBox = document.getElementById("search-field");
 
   favorites.forEach((favorite) => {
     favorite.addEventListener("click", () => {
@@ -149,4 +151,45 @@ function registerEventListener() {
       removeFavorite(favoriteID);
     });
   });
+
+  inputBox.addEventListener("input", function (e) {
+    setTimeout(function () {
+      loadLocation(e.target.value);
+    }, 500);
+  });
+}
+
+function loadLocation(inputBox) {
+  let inputBoxOldVal = "";
+  let newVal = inputBox.trim();
+
+  if (newVal && newVal !== inputBoxOldVal) {
+    inputBoxOldVal = newVal;
+    clearSuggestions();
+    getSuggestions(newVal, onMatchingData);
+  } else if (!newVal) {
+    inputBoxOldVal = "";
+    clearSuggestions();
+  }
+}
+
+function clearSuggestions() {
+  const locationsListDiv = document.getElementById("locations");
+  locationsListDiv.innerHTML = "";
+  locationsListDiv.classList.add("hide");
+}
+
+function onMatchingData(suggestions) {
+  const locationsListDiv = document.getElementById("locations");
+  let locations = "";
+
+  suggestions.forEach((location) => {
+    locations += `<div class="item">${location}</div>`;
+  });
+
+  locationsListDiv.innerHTML = locations;
+
+  if (suggestions.length > 0) {
+    locationsListDiv.classList.remove("hide");
+  }
 }

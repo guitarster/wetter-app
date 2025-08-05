@@ -11,3 +11,13 @@ export async function getForecastWeather(location) {
 
   return responseJSON;
 }
+
+export function getSuggestions(token, callback) {
+  const locations = ["London", "Lond", "Lon"];
+
+  const matching = locations.filter((location) => {
+    return location.toLowerCase().startsWith(token.toLowerCase());
+  });
+
+  callback(matching);
+}
