@@ -12,12 +12,24 @@ export async function getForecastWeather(location) {
   return responseJSON;
 }
 
-export function getSuggestions(token, callback) {
-  const locations = ["London", "Lond", "Lon"];
+export async function getSuggestions(token, callback) {
+  const url = `${API_BASE_URL}/search.json?key=${API_KEY}&q=${token}&lang=de`;
 
-  const matching = locations.filter((location) => {
-    return location.toLowerCase().startsWith(token.toLowerCase());
-  });
+  const response = await fetch(url);
 
-  callback(matching);
+  const responseJSON = await response.json();
+
+  const locations = [];
+
+  for (const element of responseJSON) {
+    const location = {
+      id: element.id,
+      name: element.name,
+      country: element.country,
+    };
+
+    locations.push(location);
+  }
+
+  callback(locations);
 }

@@ -151,16 +151,14 @@ function registerEventListener() {
     });
   });
 
-  inputBox.addEventListener("input", function (e) {
-    setTimeout(function () {
-      loadLocation(e.target.value);
-    }, 500);
-  });
+  let inputText = "";
+
+  inputBox.addEventListener("input", loadLocation);
 }
 
 function loadLocation(inputBox) {
   let inputBoxOldVal = "";
-  let newVal = inputBox.trim();
+  let newVal = inputBox.target.value.trim();
 
   if (newVal && newVal !== inputBoxOldVal) {
     inputBoxOldVal = newVal;
@@ -183,7 +181,10 @@ function onMatchingData(suggestions) {
   let locations = "";
 
   suggestions.forEach((location) => {
-    locations += `<div class="item">${location}</div>`;
+    locations += `<div id=${location.id} class="item">
+                    <p class="item__name">${location.name}</p>
+                    <p class="item__country">${location.country}</p>
+                  </div>`;
   });
 
   locationsListDiv.innerHTML = locations;

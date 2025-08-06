@@ -46,8 +46,13 @@
 }
 
 .item {
-  padding: 1rem;
+  padding: 0.8rem;
   border-bottom: 1px solid $border;
+
+  &__name {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
 }
 
 .favorites {
