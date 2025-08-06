@@ -37,7 +37,21 @@
   display: none;
 }
 
+#locations {
+  z-index: 2;
+  position: absolute;
+  background-color: #101214;
+  border-radius: $border-radius;
+  width: 400px;
+}
+
+.item {
+  padding: 1rem;
+  border-bottom: 1px solid grey;
+}
+
 .favorites {
+  z-index: 1;
   display: flex;
   flex-direction: column;
   width: 100%;

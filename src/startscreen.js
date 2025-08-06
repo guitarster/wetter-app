@@ -44,7 +44,6 @@ async function renderStartScreen(location) {
           <input type="text" id="search-field" placeholder="Nach Stadt suchen..." />
           <div id="locations" class="hide"></div>
         </div>
-        <div id="locations" class="hide"></div>
         <div class="favorites">
           ${await renderfavorites(location)}
         </div>
