@@ -151,8 +151,6 @@ function registerEventListener() {
     });
   });
 
-  let inputText = "";
-
   inputBox.addEventListener("input", loadLocation);
 }
 
@@ -191,5 +189,14 @@ function onMatchingData(suggestions) {
 
   if (suggestions.length > 0) {
     locationsListDiv.classList.remove("hide");
+  }
+
+  const items = document.querySelectorAll(".item");
+
+  for (let item of items) {
+    const id = item.getAttribute("id");
+    item.addEventListener("click", function () {
+      loadDetailView(id);
+    });
   }
 }
