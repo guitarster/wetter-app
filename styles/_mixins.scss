@@ -36,4 +36,8 @@
 
 @mixin navbar-buttons {
   width: 2rem;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
