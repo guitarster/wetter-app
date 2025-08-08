@@ -163,7 +163,6 @@ function loadAfterTimeout(inputBox) {
 }
 
 function loadLocation(inputBox) {
-  console.log(inputBox.target.value);
   let inputBoxOldVal = "";
   let newVal = inputBox.target.value.trim();
 

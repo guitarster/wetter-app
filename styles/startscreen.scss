@@ -48,6 +48,7 @@
 .item {
   padding: 0.8rem;
   border-bottom: 1px solid $border;
+  cursor: pointer;
 
   &__name {
     font-size: 1.25rem;
