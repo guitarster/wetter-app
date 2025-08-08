@@ -151,10 +151,19 @@ function registerEventListener() {
     });
   });
 
-  inputBox.addEventListener("input", loadLocation);
+  inputBox.addEventListener("input", loadAfterTimeout);
+}
+let timer;
+function loadAfterTimeout(inputBox) {
+  clearTimeout(timer);
+
+  timer = setTimeout(() => {
+    loadLocation(inputBox);
+  }, 500);
 }
 
 function loadLocation(inputBox) {
+  console.log(inputBox.target.value);
   let inputBoxOldVal = "";
   let newVal = inputBox.target.value.trim();
 
