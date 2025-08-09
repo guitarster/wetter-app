@@ -177,6 +177,7 @@ function loadLocation(inputBox) {
     inputBoxOldVal = newVal;
     clearSuggestions();
     loadPlaceholder();
+    registerEventListenerAppClick();
     getSuggestions(newVal, onMatchingData);
   } else if (!newVal) {
     inputBoxOldVal = "";
@@ -196,6 +197,12 @@ function loadPlaceholder() {
   locationsListDiv.classList.remove("hide");
 
   locationsListDiv.innerHTML = `<div class="item">Lade Vorschläge...</div>`;
+}
+
+function registerEventListenerAppClick() {
+  const app = document.getElementById("app-start");
+
+  app.addEventListener("click", clearSuggestions);
 }
 
 function onMatchingData(suggestions) {
