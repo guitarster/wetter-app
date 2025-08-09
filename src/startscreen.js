@@ -178,6 +178,7 @@ function loadLocation(inputBox) {
     clearSuggestions();
     loadPlaceholder();
     registerEventListenerAppClick();
+    registerEventListenerSearchfieldSelect();
     getSuggestions(newVal, onMatchingData);
   } else if (!newVal) {
     inputBoxOldVal = "";
@@ -185,10 +186,16 @@ function loadLocation(inputBox) {
   }
 }
 
+function addHideClass() {
+  const locationsListDiv = document.getElementById("locations");
+
+  locationsListDiv.classList.add("hide");
+}
+
 function clearSuggestions() {
   const locationsListDiv = document.getElementById("locations");
   locationsListDiv.innerHTML = "";
-  locationsListDiv.classList.add("hide");
+  addHideClass();
 }
 
 function loadPlaceholder() {
@@ -200,11 +207,23 @@ function loadPlaceholder() {
 }
 
 function registerEventListenerAppClick() {
-  const app = document.getElementById("app-start");
+  document.addEventListener("click", function (event) {
+    const wrapperSearchField = document.querySelector(".wrapper-search-field");
+
+    if (wrapperSearchField.contains(event.target)) {
+      return;
+    }
+
+    addHideClass();
+  });
+}
+
+function registerEventListenerSearchfieldSelect() {
+  const searchfield = document.getElementById("search-field");
   const locationsListDiv = document.getElementById("locations");
 
-  app.addEventListener("click", () => {
-    locationsListDiv.classList.add("hide");
+  searchfield.addEventListener("focusin", () => {
+    locationsListDiv.classList.remove("hide");
   });
 }
 
