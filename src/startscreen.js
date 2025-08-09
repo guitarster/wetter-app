@@ -158,7 +158,9 @@ function registerEventListener() {
 
   inputBox.addEventListener("input", loadAfterTimeout);
 }
+
 let timer;
+
 function loadAfterTimeout(inputBox) {
   clearTimeout(timer);
 
@@ -174,6 +176,7 @@ function loadLocation(inputBox) {
   if (newVal && newVal !== inputBoxOldVal) {
     inputBoxOldVal = newVal;
     clearSuggestions();
+    loadPlaceholder();
     getSuggestions(newVal, onMatchingData);
   } else if (!newVal) {
     inputBoxOldVal = "";
@@ -185,6 +188,14 @@ function clearSuggestions() {
   const locationsListDiv = document.getElementById("locations");
   locationsListDiv.innerHTML = "";
   locationsListDiv.classList.add("hide");
+}
+
+function loadPlaceholder() {
+  const locationsListDiv = document.getElementById("locations");
+
+  locationsListDiv.classList.remove("hide");
+
+  locationsListDiv.innerHTML = `<div class="item">Lade Vorschläge...</div>`;
 }
 
 function onMatchingData(suggestions) {
