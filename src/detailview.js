@@ -191,8 +191,12 @@ function renderNavBar() {
 }
 
 function renderNavBarIcons(location) {
-  const storedLocations = JSON.parse(localStorage.getItem("favorites"));
+  let storedLocations = JSON.parse(localStorage.getItem("favorites"));
   const navbar = document.querySelector(".navbar");
+
+  if (!storedLocations) {
+    storedLocations = [];
+  }
 
   if (storedLocations.find((element) => element === location)) {
     navbar.innerHTML += `
