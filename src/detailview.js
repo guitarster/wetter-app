@@ -12,8 +12,8 @@ import { loadStartScreen } from "./startscreen.js";
 const body = document.getElementsByTagName("body");
 let app = "";
 
-export function loadDetailView(location) {
-  renderLoadScreen(`Lade Wetter für ${location}`);
+export function loadDetailView(location, locationName) {
+  renderLoadScreen(`Lade Wetter für ${locationName}`);
   loadWeather(location);
 }
 

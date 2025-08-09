@@ -68,7 +68,9 @@ async function loadfavorite(location) {
   const backgroundImagePath = loadBackgroundImage(weatherData.current);
 
   return `
-    <div id='${location}' class="wrapper">
+    <div id='${location}' data-id="${
+    weatherData.location.name
+  }" class="wrapper">
       <div class="delete-button"><svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M10 12V17" stroke="#FF0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M14 12V17" stroke="#FF0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -137,8 +139,11 @@ function registerEventListener() {
   favorites.forEach((favorite) => {
     favorite.addEventListener("click", () => {
       const favoriteID = favorite.closest(".wrapper").getAttribute("id");
+      const favoriteDataID = favorite
+        .closest(".wrapper")
+        .getAttribute("data-id");
 
-      loadDetailView(favoriteID);
+      loadDetailView(favoriteID, favoriteDataID);
     });
   });
 
@@ -187,7 +192,7 @@ function onMatchingData(suggestions) {
   let locations = "";
 
   suggestions.forEach((location) => {
-    locations += `<div id=${location.id} class="item">
+    locations += `<div id=${location.id} data-id="${location.name}" class="item">
                     <p class="item__name">${location.name}</p>
                     <p class="item__country">${location.country}</p>
                   </div>`;
@@ -203,8 +208,9 @@ function onMatchingData(suggestions) {
 
   for (let item of items) {
     const id = item.getAttribute("id");
+    const dataId = item.getAttribute("data-id");
     item.addEventListener("click", function () {
-      loadDetailView(id);
+      loadDetailView(id, dataId);
     });
   }
 }
