@@ -58,7 +58,7 @@ function renderFavoritesMessage() {
   const appStart = document.getElementById("app-start");
 
   if (!document.querySelector(".wrapper")) {
-    appStart.innerHTML += `<span class="message-favorites" >Noch keine Favoriten gespeichert</span>`;
+    appStart.innerHTML += `<div class="message-favorites" >Noch keine Favoriten gespeichert</div>`;
     registerEventListener();
   }
 }
@@ -201,8 +201,11 @@ function loadPlaceholder() {
 
 function registerEventListenerAppClick() {
   const app = document.getElementById("app-start");
+  const locationsListDiv = document.getElementById("locations");
 
-  app.addEventListener("click", clearSuggestions);
+  app.addEventListener("click", () => {
+    locationsListDiv.classList.add("hide");
+  });
 }
 
 function onMatchingData(suggestions) {
