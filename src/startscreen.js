@@ -4,7 +4,7 @@ import { loadBackgroundImage } from "./detailview.js";
 import { loadDetailView } from "./detailview.js";
 import { renderLoadScreen } from "./loadscreen.js";
 
-const body = document.getElementsByTagName("body");
+const body = document.getElementsByTagName("body")[0];
 
 export function loadStartScreen() {
   renderLoadScreen("Lade Übersicht");
@@ -34,7 +34,7 @@ async function renderfavorites(location) {
 }
 
 async function renderStartScreen(location) {
-  body[0].innerHTML = `
+  body.innerHTML = `
     <div id="app-start">
         <div class="headline">
             <div class="headline__title">Wetter</div>

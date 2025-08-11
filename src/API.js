@@ -19,17 +19,5 @@ export async function getSuggestions(token, callback) {
 
   const responseJSON = await response.json();
 
-  const locations = [];
-
-  for (const element of responseJSON) {
-    const location = {
-      id: element.id,
-      name: element.name,
-      country: element.country,
-    };
-
-    locations.push(location);
-  }
-
-  callback(locations);
+  callback(responseJSON);
 }
